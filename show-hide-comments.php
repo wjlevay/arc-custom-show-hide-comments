@@ -5,9 +5,14 @@
   Reference: http://coreyjmahler.com/topics/create-a-button-to-showhide-wordpress-comments-with-a-click/
 */
 
-function load_show_hide_comments_js() { // load the file
+function load_show_hide_comments_js() { 
+	// load the file
 	wp_register_script( 'show_hide_comments', plugins_url( '/show-hide-comments.js', __FILE__ ), array('jquery'), '', true ); // register the file
-	wp_enqueue_script( 'show_hide_comments' ); // enqueue the file
+
+	  if ( is_single() && comments_open() ) {
+	    // enables script only if post has comments
+	    wp_enqueue_script( 'show_hide_comments' ); // enqueue the file
+	  }	
 }
 
 add_action('wp_enqueue_scripts', 'load_show_hide_comments_js'); // initiate the function
